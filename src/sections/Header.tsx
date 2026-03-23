@@ -15,7 +15,7 @@ const Header = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Courses', href: '/#courses' },
+    { name: 'Skills', href: '/#courses' },
     {
       name: 'Explore',
       href: '#',
@@ -110,7 +110,7 @@ const Header = () => {
               onClick={() => handleNavigation('/#courses')} 
               className="px-8 py-3.5 bg-purple text-white font-black text-xs uppercase tracking-[0.2em] rounded-full shadow-xl shadow-purple/20 hover:bg-navy transition-all active:scale-95"
             >
-              START RESEARCH
+              COURSE CONTENT
             </button>
           </div>
 

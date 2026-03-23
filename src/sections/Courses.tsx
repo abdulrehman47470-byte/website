@@ -44,7 +44,7 @@ const Courses = () => {
             <span className="w-8 h-[2px] bg-purple" />
           </div>
           <h2 className={`text-4xl lg:text-5xl font-bold text-navy mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '150ms' }}>
-            Master the High-Income Bio-Research Ecosystem
+            Master the High-Income & High Demand Bio Skills
           </h2>
           <p className={`text-lg text-text-body transition-all duration-600 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '300ms' }}>
             From basics to advanced applications—gain the Biotech and Research skills required to land 6-figure remote jobs.

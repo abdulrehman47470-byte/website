@@ -50,11 +50,20 @@ const BrandLogos = () => {
           className={`relative transition-all duration-800 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
           style={{ transitionTimingFunction: 'var(--ease-smooth)', transitionDelay: '300ms' }}
         >
+          {/* Edge Fades */}
           <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-          <div className="flex animate-marquee items-center">
-            {[...brands, ...brands].map((brand, index) => (
+          {/* ULTRA FAST SPEED: 
+              - animationDuration set to '7s' for maximum speed.
+              - Increased clones to 5 sets to maintain a seamless loop.
+              - Added hover:pause to make it readable if the user stops on a logo.
+          */}
+          <div 
+            className="flex animate-marquee items-center flex-nowrap hover:[animation-play-state:paused]"
+            style={{ animationDuration: '7s' }} 
+          >
+            {[...brands, ...brands, ...brands, ...brands, ...brands].map((brand, index) => (
               <div
                 key={`${brand.name}-${index}`}
                 className="flex-shrink-0 mx-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer flex items-center justify-center min-w-[250px]"

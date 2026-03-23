@@ -38,7 +38,7 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: Mail, title: 'Email Me', content: 'biocareer12@gmail.com', link: 'mailto:biocareer12@gmail.com', desc: 'Expert research queries' },
-    { icon: Phone, title: 'Direct Contact', content: '0329 1698616', link: 'tel:+923291698616', desc: 'WhatsApp & Call' },
+    { icon: Phone, title: 'WhatsApp Contact', content: '0329 1698616', link: 'tel:+923291698616', desc: 'WhatsApp & Call' },
     { icon: MapPin, title: 'HQ Location', content: 'Lahore, Pakistan', link: '#', desc: 'Remote Global Support' },
     { icon: Clock, title: 'Availability', content: 'Mon - Sat: 10AM - 8PM', link: '#', desc: 'Flexible Timezones' },
   ];

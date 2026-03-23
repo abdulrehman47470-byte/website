@@ -25,7 +25,7 @@ const Hero = () => {
   }, []);
 
   const stats = [
-    { icon: Award, value: 'Research Medalist', label: 'UCP Research Track' },
+    { icon: Award, value: 'Research Medalist', label: 'International Bio-Researcher' },
     { icon: Microscope, value: '20+', label: 'Published Papers' },
     { icon: Brain, value: 'Patent Holder', label: 'Diabetes Formulation' },
     { icon: Rocket, value: 'Founder & CEO', label: 'BioCareer Entrepreneur' },
@@ -77,7 +77,7 @@ const Hero = () => {
                 onClick={() => document.querySelector('#courses')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full sm:w-auto bg-purple text-white font-black text-lg px-10 py-5 rounded-2xl shadow-xl shadow-purple/20 hover:shadow-purple/40 hover:-translate-y-1 transition-all duration-300"
               >
-                Explore Courses
+                COURSE
               </button>
 
               <a 
