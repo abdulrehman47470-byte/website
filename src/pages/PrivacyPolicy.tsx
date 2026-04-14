@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Eye, Database, Share2, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Lock, Eye, Database, Share2, ShieldCheck, WalletCards } from 'lucide-react';
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -32,6 +32,15 @@ const PrivacyPolicy = () => {
     },
     {
       id: 3,
+      icon: WalletCards,
+      title: 'Refund & Resource Policy',
+      content: `Please note our strict enrollment and refund terms:
+      
+      • Immediate Resource Access: Unlike traditional courses where materials are released gradually, BioCareer provides full access to all research documentation and comprehensive recording materials at the very start of the program.
+      • Non-Refundable Fee: Because all proprietary instructional assets and recording materials are delivered upon enrollment, all course fees are strictly non-refundable. By initiating enrollment, you acknowledge receipt of these resources as full value for the transaction.`
+    },
+    {
+      id: 4,
       icon: Share2,
       title: 'Information Sharing & Confidentiality',
       content: `BioCareer operates under a strict "Non-Disclosure" framework:
@@ -41,7 +50,7 @@ const PrivacyPolicy = () => {
       • NDA Compliance: All mentorship is conducted under standard guidelines to protect your research novelty.`
     },
     {
-      id: 4,
+      id: 5,
       icon: Lock,
       title: 'Data Security & Storage',
       content: `We implement technical measures to protect sensitive scientific information:
@@ -51,7 +60,7 @@ const PrivacyPolicy = () => {
       • Data Retention: We retain files only as long as necessary for the project timeline or until publication.`
     },
     {
-      id: 5,
+      id: 6,
       icon: Database,
       title: 'Your Rights & Control',
       content: `You maintain full ownership of your intellectual property and have the right to:
@@ -85,13 +94,13 @@ const PrivacyPolicy = () => {
             <Lock className="w-10 h-10 text-purple" />
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-navy mb-4 tracking-tight">
-            Privacy & <span className="text-purple">IP Policy</span>
+            Privacy & <span className="text-purple">Refund Policy</span>
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto font-medium">
-            At BioCareer, protecting your research novelty and intellectual property is our primary directive.
+            At BioCareer, protecting your research novelty and establishing clear terms for our professional mentorship is our primary directive.
           </p>
           <p className="text-sm font-bold text-slate-400 mt-6 uppercase tracking-widest">
-            Last updated: February 2024
+            Last updated: April 2026
           </p>
         </div>
       </section>
