@@ -5,7 +5,7 @@ const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  const demoLink = "https://drive.google.com/file/d/1dEIkSWms5M9IIO6NctAn-IR12SGTaw7o/view?usp=sharing";
+  const demoLink = "https://drive.google.com/file/d/1OlJgkjbhWNA8ZgAB1DPhvZXzCYjFdPP2/view?usp=sharing";
 
   useEffect(() => {
     const handleScroll = () => {
