@@ -1,0 +1,5 @@
+node_modules
+dist
+original-images-backup
+.DS_Store
+*.local

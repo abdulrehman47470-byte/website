@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/images/web.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bio-Career</title>
+
+    <!-- Preconnect to speed up font fetch -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" />
+
+    <!-- Preload above-the-fold assets (LCP). type= lets unsupported browsers skip this and fall back to the <picture> element's .webp source instead of double-fetching. -->
+    <link rel="preload" as="image" href="/images/Hero.avif" type="image/avif" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/logo.avif" type="image/avif" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
