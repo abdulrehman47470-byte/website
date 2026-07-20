@@ -226,7 +226,7 @@ const Testimonials = () => {
               <span className="text-purple-600 font-black text-xs uppercase tracking-widest">Student Reviews ({testimonials.length})</span>
             </div>
             <h2 className="text-4xl lg:text-6xl font-black leading-none tracking-tighter">
-              What Our <br /> <span className="text-purple-600">Scientists</span> Say
+              What My <br /> <span className="text-purple-600">Students</span> Say
             </h2>
             <div className="flex gap-4">
               <button onClick={prevSlide} className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center hover:bg-purple-600 hover:text-white transition-all shadow-sm">
