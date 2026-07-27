@@ -47,7 +47,7 @@ const highlights = [
   },
   {
     icon: Target,
-    title: '19 Bioscience Disciplines',
+    title: '19 Bioscience Earning Paths',
     desc: 'Field-by-field career and research blueprints',
   },
   {

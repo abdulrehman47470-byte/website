@@ -6,7 +6,7 @@ import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  base: './',
+  base: '/',
   plugins: [
     // Dev-only: injects a code-path attribute on every JSX element for
     // editor "click to open source" tooling. Must never ship to production —
