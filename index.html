@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/images/web.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bio-Career</title>
+
+    <!-- Self-hosted font preloads (above-the-fold weights: 400 body, 800 headings) -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/plus-jakarta-sans-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/plus-jakarta-sans-800.woff2" crossorigin />
+
+    <!-- Preload above-the-fold assets (LCP). type= lets unsupported browsers skip this and fall back to the <picture> element's .webp source instead of double-fetching. -->
+    <link rel="preload" as="image" href="/images/Hero.avif" type="image/avif" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/logo.avif" type="image/avif" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
