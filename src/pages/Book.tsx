@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   ArrowLeft,
   BookOpen,
@@ -29,6 +30,7 @@ const waLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const tocPages: FlipBookPage[] = Array.from({ length: 7 }, (_, i) => ({
+  avif: `/images/book/toc-${i + 1}.avif`,
   webp: `/images/book/toc-${i + 1}.webp`,
   jpg: `/images/book/toc-${i + 1}.jpg`,
   alt: `Table of Contents — page ${i + 1} of 7`,
@@ -102,6 +104,9 @@ const Book = () => {
         path="/book"
         image="/images/book/cover.jpg"
       />
+      <Helmet>
+        <link rel="preload" as="image" href="/images/book/cover.avif" type="image/avif" fetchPriority="high" />
+      </Helmet>
 
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -131,6 +136,7 @@ const Book = () => {
                 style={{ aspectRatio: '1959 / 2535' }}
               >
                 <picture>
+                  <source srcSet="/images/book/cover.avif" type="image/avif" />
                   <source srcSet="/images/book/cover.webp" type="image/webp" />
                   <img
                     src="/images/book/cover.jpg"

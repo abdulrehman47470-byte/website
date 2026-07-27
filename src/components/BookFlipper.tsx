@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Lock } from 'lucide-react';
 
 export interface FlipBookPage {
+  avif?: string;
   webp: string;
   jpg: string;
   alt: string;
@@ -144,11 +145,13 @@ const BookFlipper = ({ pages, ratio, badgeLabel = 'Preview Only' }: BookFlipperP
                     }}
                   >
                     <picture>
+                      {page.avif && <source srcSet={page.avif} type="image/avif" />}
                       <source srcSet={page.webp} type="image/webp" />
                       <img
                         src={page.jpg}
                         alt={page.alt}
                         loading={i === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={i === 0 ? 'high' : undefined}
                         decoding="async"
                         draggable={false}
                         className="w-full h-full object-cover"
