@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useOptimizedScroll } from '../hooks/useOptimizedScroll';
+import { routePrefetchers } from '../lib/routePrefetch';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -101,8 +102,10 @@ const Header = () => {
                     )}
                   </div>
                 ) : (
-                  <button 
-                    onClick={() => handleNavigation(link.href)} 
+                  <button
+                    onClick={() => handleNavigation(link.href)}
+                    onPointerEnter={() => routePrefetchers[link.href]?.()}
+                    onPointerDown={() => routePrefetchers[link.href]?.()}
                     className="font-black text-navy hover:text-purple uppercase text-base tracking-wider py-4 transition-colors relative after:content-[''] after:absolute after:bottom-2 after:left-0 after:w-0 after:h-[3px] after:bg-purple after:transition-all hover:after:w-full"
                   >
                     {link.name}
@@ -134,9 +137,10 @@ const Header = () => {
         <div className="lg:hidden absolute top-full left-4 right-4 mt-4 bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100 pointer-events-auto">
           <div className="flex flex-col gap-2">
             {navLinks.map((link) => (
-              <button 
-                key={link.name} 
-                onClick={() => handleNavigation(link.href)} 
+              <button
+                key={link.name}
+                onClick={() => handleNavigation(link.href)}
+                onPointerDown={() => routePrefetchers[link.href]?.()}
                 className="text-center py-4 px-6 text-lg font-black text-navy hover:bg-purple/5 rounded-[1.5rem] uppercase tracking-widest transition-all"
               >
                 {link.name}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Linkedin } from 'lucide-react';
+import { routePrefetchers } from '../lib/routePrefetch';
 
 const Footer = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -74,7 +75,12 @@ const Footer = () => {
             <ul className="space-y-4">
               {quickLinks.map((link, index) => (
                 <li key={link.name} className="transition-all duration-500" style={{ transitionDelay: `${200 + index * 80}ms` }}>
-                  <button onClick={() => handleNavigation(link.href)} className="text-white/70 hover:text-purple hover:translate-x-2 transition-all duration-300">
+                  <button
+                    onClick={() => handleNavigation(link.href)}
+                    onPointerEnter={() => routePrefetchers[link.href]?.()}
+                    onPointerDown={() => routePrefetchers[link.href]?.()}
+                    className="text-white/70 hover:text-purple hover:translate-x-2 transition-all duration-300"
+                  >
                     {link.name}
                   </button>
                 </li>
@@ -87,7 +93,12 @@ const Footer = () => {
             <ul className="space-y-4">
               {supportLinks.map((link, index) => (
                 <li key={link.name} className="transition-all duration-500" style={{ transitionDelay: `${350 + index * 80}ms` }}>
-                  <Link to={link.href} className="text-white/70 hover:text-purple hover:translate-x-2 transition-all duration-300">
+                  <Link
+                    to={link.href}
+                    onPointerEnter={() => routePrefetchers[link.href]?.()}
+                    onPointerDown={() => routePrefetchers[link.href]?.()}
+                    className="text-white/70 hover:text-purple hover:translate-x-2 transition-all duration-300"
+                  >
                     {link.name}
                   </Link>
                 </li>
