@@ -30,9 +30,9 @@ const waLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 const tocPages: FlipBookPage[] = Array.from({ length: 8 }, (_, i) => ({
-  avif: `/images/book/toc-${i + 1}-v4.avif`,
-  webp: `/images/book/toc-${i + 1}-v4.webp`,
-  jpg: `/images/book/toc-${i + 1}-v4.jpg`,
+  avif: `/images/book/toc-${i + 1}-v5.avif`,
+  webp: `/images/book/toc-${i + 1}-v5.webp`,
+  jpg: `/images/book/toc-${i + 1}-v5.jpg`,
   alt: `Table of Contents — page ${i + 1} of 8`,
 }));
 
