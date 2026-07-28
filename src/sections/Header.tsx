@@ -63,6 +63,8 @@ const Header = () => {
               <img
                 src="/images/logo.webp"
                 alt="BioCareer"
+                width={400}
+                height={267}
                 fetchPriority="high"
                 decoding="async"
                 className={`w-auto object-contain transition-all duration-300 group-hover:scale-105
