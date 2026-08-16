@@ -51,88 +51,52 @@ interface FieldEntry {
   desc: string;
 }
 
-interface FieldGroup {
-  group: string;
-  fields: FieldEntry[];
-}
-
-const fieldGroups: FieldGroup[] = [
-  {
-    group: 'General',
-    fields: [
-      {
-        name: 'General Biological Sciences',
-        desc: "Doesn't fit one exact field? This general biosciences track covers you too.",
-      },
-    ],
-  },
-  {
-    group: 'Organismal & Taxonomic Fields',
-    fields: [
-      { name: 'Zoology', desc: 'Study of animals, their behavior, and physiology.' },
-      { name: 'Botany', desc: 'Study of plants, growth, and processes.' },
-      { name: 'Microbiology', desc: 'Study of bacteria, viruses, and fungi.' },
-      { name: 'Mycology', desc: 'Study of fungi.' },
-      { name: 'Entomology', desc: 'Study of insects.' },
-      { name: 'Ichthyology', desc: 'Study of fish.' },
-      { name: 'Ornithology', desc: 'Study of birds.' },
-      { name: 'Herpetology', desc: 'Study of reptiles and amphibians.' },
-      { name: 'Mammalogy', desc: 'Study of mammals.' },
-    ],
-  },
-  {
-    group: 'Molecular & Cellular Fields',
-    fields: [
-      { name: 'Genetics', desc: 'Study of genes, heredity, and DNA.' },
-      { name: 'Biochemistry', desc: 'Chemical processes inside living things.' },
-      { name: 'Cell Biology', desc: 'Structure and function of cells.' },
-      { name: 'Molecular Biology', desc: 'Biological activity at the molecular level.' },
-      { name: 'Immunology', desc: 'Study of immune systems and disease defense.' },
-      { name: 'Virology', desc: 'Study of viruses and how they act.' },
-    ],
-  },
-  {
-    group: 'Systems & Environmental Fields',
-    fields: [
-      { name: 'Ecology', desc: 'How organisms interact with each other and nature.' },
-      { name: 'Evolutionary Biology', desc: 'How species change and originate over time.' },
-      { name: 'Physiology', desc: 'How living organism systems function.' },
-      { name: 'Marine Biology', desc: 'Life in oceans and saltwater environments.' },
-      { name: 'Astrobiology', desc: 'Study of potential life in the universe.' },
-    ],
-  },
-  {
-    group: 'Health & Medical Sciences',
-    fields: [
-      { name: 'MBBS', desc: 'Bachelor of Medicine & Surgery — study and practice of human medicine.' },
-      { name: 'BDS', desc: 'Bachelor of Dental Surgery — study of oral and dental health.' },
-      { name: 'Pharm-D', desc: 'Doctor of Pharmacy — drug therapy, formulation, and clinical practice.' },
-      { name: 'DVM', desc: 'Doctor of Veterinary Medicine — diagnosis and treatment of animal health.' },
-      { name: 'Nursing', desc: 'Patient care, clinical practice, and health management.' },
-      { name: 'Physiotherapy (DPT)', desc: 'Physical rehabilitation and human movement science.' },
-      { name: 'Public Health', desc: 'Population health, epidemiology, and disease prevention.' },
-      { name: 'Nutrition & Dietetics', desc: 'Study of food, nutrition, and diet planning.' },
-      { name: 'Biomedical Engineering', desc: 'Applying engineering principles to medicine and biology.' },
-      { name: 'Medical Laboratory Sciences', desc: 'Diagnostic testing and clinical laboratory analysis.' },
-    ],
-  },
-  {
-    group: 'Interdisciplinary & Applied Fields',
-    fields: [
-      { name: 'Biotechnology', desc: 'Using tech and living matter together.' },
-      { name: 'Bioinformatics', desc: 'Using computers to analyze genomic and biological data.' },
-      { name: 'Biophysics', desc: 'Applying physics principles to biological systems.' },
-      { name: 'Paleontology', desc: 'Study of ancient life via fossils.' },
-      { name: 'Agricultural Sciences', desc: 'Crop, soil, and livestock production science.' },
-      { name: 'Environmental Science', desc: 'Study of ecosystems and human impact on the environment.' },
-      { name: 'Food Science & Technology', desc: 'Study of food production, safety, and processing.' },
-      { name: 'Forensic Science', desc: 'Applying science to criminal investigation.' },
-      { name: 'Neuroscience', desc: 'Study of the brain and nervous system.' },
-    ],
-  },
+const allFields: FieldEntry[] = [
+  // Most-requested fields first
+  { name: 'Biotechnology', desc: 'Using tech and living matter together.' },
+  { name: 'Bioinformatics', desc: 'Using computers to analyze genomic and biological data.' },
+  { name: 'Medical', desc: 'General medical & health sciences — MBBS, BDS, Pharmacy, Nursing, and more.' },
+  { name: 'Microbiology', desc: 'Study of bacteria, viruses, and fungi.' },
+  { name: 'Zoology', desc: 'Study of animals, their behavior, and physiology.' },
+  { name: 'Botany', desc: 'Study of plants, growth, and processes.' },
+  { name: 'Pharmacy', desc: 'Study and practice of medicines, drug therapy, and clinical pharmacy.' },
+  { name: 'Biochemistry', desc: 'Chemical processes inside living things.' },
+  { name: 'Chemistry', desc: 'Study of matter, chemical reactions, and compounds.' },
+  { name: 'All Bioscience Fields', desc: "Doesn't fit one exact field? This general track covers you too." },
+  // Every other bioscience & health field
+  { name: 'Mycology', desc: 'Study of fungi.' },
+  { name: 'Entomology', desc: 'Study of insects.' },
+  { name: 'Ichthyology', desc: 'Study of fish.' },
+  { name: 'Ornithology', desc: 'Study of birds.' },
+  { name: 'Herpetology', desc: 'Study of reptiles and amphibians.' },
+  { name: 'Mammalogy', desc: 'Study of mammals.' },
+  { name: 'Genetics', desc: 'Study of genes, heredity, and DNA.' },
+  { name: 'Cell Biology', desc: 'Structure and function of cells.' },
+  { name: 'Molecular Biology', desc: 'Biological activity at the molecular level.' },
+  { name: 'Immunology', desc: 'Study of immune systems and disease defense.' },
+  { name: 'Virology', desc: 'Study of viruses and how they act.' },
+  { name: 'Ecology', desc: 'How organisms interact with each other and nature.' },
+  { name: 'Evolutionary Biology', desc: 'How species change and originate over time.' },
+  { name: 'Physiology', desc: 'How living organism systems function.' },
+  { name: 'Marine Biology', desc: 'Life in oceans and saltwater environments.' },
+  { name: 'Astrobiology', desc: 'Study of potential life in the universe.' },
+  { name: 'MBBS', desc: 'Bachelor of Medicine & Surgery — study and practice of human medicine.' },
+  { name: 'BDS', desc: 'Bachelor of Dental Surgery — study of oral and dental health.' },
+  { name: 'DVM', desc: 'Doctor of Veterinary Medicine — diagnosis and treatment of animal health.' },
+  { name: 'Nursing', desc: 'Patient care, clinical practice, and health management.' },
+  { name: 'Physiotherapy (DPT)', desc: 'Physical rehabilitation and human movement science.' },
+  { name: 'Public Health', desc: 'Population health, epidemiology, and disease prevention.' },
+  { name: 'Nutrition & Dietetics', desc: 'Study of food, nutrition, and diet planning.' },
+  { name: 'Biomedical Engineering', desc: 'Applying engineering principles to medicine and biology.' },
+  { name: 'Medical Laboratory Sciences', desc: 'Diagnostic testing and clinical laboratory analysis.' },
+  { name: 'Biophysics', desc: 'Applying physics principles to biological systems.' },
+  { name: 'Paleontology', desc: 'Study of ancient life via fossils.' },
+  { name: 'Agricultural Sciences', desc: 'Crop, soil, and livestock production science.' },
+  { name: 'Environmental Science', desc: 'Study of ecosystems and human impact on the environment.' },
+  { name: 'Food Science & Technology', desc: 'Study of food production, safety, and processing.' },
+  { name: 'Forensic Science', desc: 'Applying science to criminal investigation.' },
+  { name: 'Neuroscience', desc: 'Study of the brain and nervous system.' },
 ];
-
-const allFields = fieldGroups.flatMap((g) => g.fields);
 
 const skillCategories = [
   {
@@ -461,14 +425,10 @@ const Eligibility = () => {
                   <option value="" className="text-navy">
                     Select your field...
                   </option>
-                  {fieldGroups.map((group) => (
-                    <optgroup key={group.group} label={group.group} className="text-navy font-bold">
-                      {group.fields.map((f) => (
-                        <option key={f.name} value={f.name} className="text-navy">
-                          {f.name}
-                        </option>
-                      ))}
-                    </optgroup>
+                  {allFields.map((f) => (
+                    <option key={f.name} value={f.name} className="text-navy">
+                      {f.name}
+                    </option>
                   ))}
                 </select>
                 <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none" />
