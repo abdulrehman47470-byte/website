@@ -28,12 +28,10 @@ import {
   Wallet,
   Lock,
   Play,
-  Factory,
   BrainCircuit,
   BookOpenCheck,
   Compass,
   Coins,
-  PenTool,
   FileBadge,
   BarChart3,
   Microscope,
@@ -208,51 +206,15 @@ const classDetails = [
 ];
 
 const achievements = [
-  {
-    icon: Factory,
-    title: 'Industry Skills',
-    desc: "Learn high-paying, industry-relevant skills universities don't teach—including bioinformatics and real research workflows.",
-  },
-  {
-    icon: BrainCircuit,
-    title: 'AI & ML Proficiency',
-    desc: 'Master BioPython, N8N workflows, and AI-driven biotech tools, opening doors to high-paying career opportunities.',
-  },
-  {
-    icon: BookOpenCheck,
-    title: 'Research Publication',
-    desc: 'Learn to produce high-impact scientific publications, mastering the end-to-end process from data to international journals.',
-  },
-  {
-    icon: Compass,
-    title: 'Global Job Hunting',
-    desc: 'Master the art of tracking international remote roles, scholarship hunting, and supervisor outreach with proven strategies.',
-  },
-  {
-    icon: Coins,
-    title: 'Online Earning',
-    desc: 'Learn to monetize your research expertise through freelancing and remote data roles, building a sustainable income stream.',
-  },
-  {
-    icon: PenTool,
-    title: 'Scientific Writing',
-    desc: 'Master research writing and data interpretation to significantly improve your employability in global academia.',
-  },
-  {
-    icon: FileBadge,
-    title: 'Expert Portfolio',
-    desc: 'Build a strong professional CV and project showcase demonstrating expertise in AI and computational research.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Data Dashboards',
-    desc: 'Gain practical exposure to Power BI and Looker Studio—solving real-world problems that make you stand out globally.',
-  },
-  {
-    icon: Microscope,
-    title: 'Novel Discoveries',
-    desc: 'Conduct original in-silico research work under my guidance to make independent discoveries in Biotech and Drug Design.',
-  },
+  { icon: Cpu, title: 'High Earning Computational Skills of Your Field' },
+  { icon: BarChart3, title: 'High Demand Data Science Skills' },
+  { icon: BrainCircuit, title: 'High Demand Earning AI / Automation Skills of Your Field' },
+  { icon: BookOpenCheck, title: 'Research Publication in Top International Journals — Free' },
+  { icon: Award, title: 'International Certificate' },
+  { icon: Compass, title: 'Job Hunting' },
+  { icon: Coins, title: 'Online Earning' },
+  { icon: FileBadge, title: 'Professional Portfolio' },
+  { icon: Microscope, title: 'International-Level Bioscience Skills' },
 ];
 
 const feedbackScreenshots = [
@@ -588,13 +550,12 @@ const Eligibility = () => {
                 {achievements.map((a) => (
                   <div
                     key={a.title}
-                    className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-purple/30 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all"
+                    className="flex items-center gap-4 bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-purple/30 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all"
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-[#2563eb] flex items-center justify-center mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-[#2563eb] flex items-center justify-center flex-shrink-0">
                       <a.icon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-black text-navy text-lg mb-2">{a.title}</h3>
-                    <p className="text-slate-500 font-medium leading-relaxed text-sm">{a.desc}</p>
+                    <h3 className="font-black text-navy leading-snug">{a.title}</h3>
                   </div>
                 ))}
               </div>
