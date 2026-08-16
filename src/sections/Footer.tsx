@@ -28,6 +28,7 @@ const Footer = () => {
     { name: 'About Us', href: '/about' },
     { name: 'The Book', href: '/book' },
     { name: 'Research Tracks', href: '/#courses' },
+    { name: 'Eligibility', href: '/eligibility' },
     { name: 'Contact', href: '/contact' },
   ];
 

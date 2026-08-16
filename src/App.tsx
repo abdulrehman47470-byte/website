@@ -17,6 +17,7 @@ import FAQ from './pages/FAQ';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Book from './pages/Book';
+import Eligibility from './pages/Eligibility';
 
 // Home Page Component
 const HomePage = () => (
@@ -67,6 +68,7 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/book" element={<Book />} />
+        <Route path="/eligibility" element={<Eligibility />} />
       </Routes>
     </Router>
   );
