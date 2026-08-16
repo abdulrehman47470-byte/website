@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
   FlaskConical,
   Dna,
   Cpu,
@@ -28,6 +27,7 @@ import {
   Wallet,
   Lock,
   Play,
+  BadgePercent,
   BrainCircuit,
   BookOpenCheck,
   Compass,
@@ -416,16 +416,27 @@ const Eligibility = () => {
       {/* Hero */}
       <section className="bg-gradient-to-br from-purple/5 to-white py-16 sm:py-24">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple/10 text-purple text-[11px] font-black uppercase tracking-widest rounded-full mb-6">
-            <Sparkles className="w-3.5 h-3.5" /> Free Skills-Matching Tool
-          </span>
+          <div className="inline-flex flex-col items-center gap-2 px-8 sm:px-10 py-6 bg-navy rounded-[2rem] shadow-2xl mb-8">
+            <div className="flex items-center gap-2.5">
+              <BadgePercent className="w-4 h-4 text-white/40 flex-shrink-0" />
+              <span className="text-[11px] font-black text-white/50 uppercase tracking-widest">Total Fee</span>
+              <span className="text-lg sm:text-xl font-black text-white/40 line-through">Rs 8,000</span>
+            </div>
+            <div className="flex items-baseline gap-2.5">
+              <span className="text-[11px] font-black text-purple-300 uppercase tracking-widest">Discounted Fee</span>
+              <span className="text-4xl sm:text-5xl font-black text-purple-400">Rs 3,000</span>
+            </div>
+            <p className="text-[11px] sm:text-xs font-black text-white uppercase tracking-wide animate-pulse mt-1">
+              Only Last 4 Seats Left for the Discounted Price
+            </p>
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-navy tracking-tight leading-[1.05] mb-6">
-            Find Your Personalized <span className="text-purple">Bio-Data Science</span> Roadmap
+            Learn <span className="text-purple">High-Demand & High-Earning</span> Skills of Your Field
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            Select your field of study below — whether it's Zoology, Genetics, Bioinformatics, BDS, MBBS, or any of
-            the {allFields.length} bioscience & health fields — and instantly see the exact high-income skills built
-            for you.
+            Select your field of study below — whether it's Biotechnology, Microbiology, Zoology, Pharmacy,
+            Biochemistry, Chemistry or any of the {allFields.length} bioscience & health fields — and instantly see
+            the exact high-income skills built for you.
           </p>
         </div>
       </section>
