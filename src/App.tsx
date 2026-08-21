@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './sections/Header';
 import Hero from './sections/Hero';
@@ -44,12 +44,6 @@ const HomePage = () => (
 
 function App() {
   useEffect(() => {
-    // Page components are already bundled into the main chunk, so the only
-    // remaining "cold click" gap is route-specific image bytes for visitors
-    // who tap without ever hovering (mobile, or a fast first click). Warming
-    // the book cover here — after idle, so it never competes with the
-    // current page's own images — means it's usually already cached by the
-    // time a first-time visitor taps through to /book.
     const timeoutId = window.setTimeout(() => {
       const img = new Image();
       img.src = '/images/book/cover.avif';
@@ -60,7 +54,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Navigate to="/eligibility" replace />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<HelpCenter />} />
         <Route path="/terms" element={<TermsOfService />} />
