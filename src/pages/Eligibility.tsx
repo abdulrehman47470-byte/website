@@ -334,8 +334,9 @@ const Eligibility = () => {
   const tabContentRef = useRef<HTMLDivElement>(null);
   const fieldSelectorRef = useRef<HTMLDivElement>(null);
 
-  const [pendingAction, setPendingAction] = useState(false);
+  const [pendingAction, setPendingAction] = useState<'register' | null>(null);
   const [fieldError, setFieldError] = useState(false);
+  const [errorKey, setErrorKey] = useState(0);
   const [showStickyBar, setShowStickyBar] = useState(false);
 
   useEffect(() => {
@@ -344,11 +345,29 @@ const Eligibility = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const requireField = () => {
+    setFieldError(true);
+    setErrorKey((k) => k + 1);
+    fieldSelectorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Used by the hero and sticky-bar buttons: make sure a field is picked,
+  // then just let the user browse Course Content from the top — never
+  // jump straight to the registration form.
+  const goToCourseContent = () => {
+    if (!selectedField) {
+      requireField();
+      return;
+    }
+    roadmapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Used only by the Total Fees "Chat on WhatsApp" button: after picking a
+  // field, continue straight on to the registration form.
   const goToRegister = () => {
     if (!selectedField) {
-      setPendingAction(true);
-      setFieldError(true);
-      fieldSelectorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setPendingAction('register');
+      requireField();
       return;
     }
     document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -401,9 +420,9 @@ const Eligibility = () => {
       setIsRevealing(false);
       setShowRoadmap(true);
       window.setTimeout(() => {
-        if (pendingAction) {
+        if (pendingAction === 'register') {
           document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setPendingAction(false);
+          setPendingAction(null);
         } else {
           roadmapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -449,14 +468,14 @@ const Eligibility = () => {
           <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-center gap-3">
             <button
               type="button"
-              onClick={goToRegister}
+              onClick={goToCourseContent}
               className="flex items-center gap-2 px-5 py-2.5 bg-purple text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
             >
               <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
             </button>
             <button
               type="button"
-              onClick={goToRegister}
+              onClick={goToCourseContent}
               className="flex items-center gap-2 px-5 py-2.5 bg-white/10 border border-white/20 text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
             >
               <BadgeCheck className="w-4 h-4" /> Fill Out the Form
@@ -497,14 +516,14 @@ const Eligibility = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
             <button
               type="button"
-              onClick={goToRegister}
+              onClick={goToCourseContent}
               className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-purple text-white font-black rounded-2xl shadow-xl shadow-purple/20 hover:bg-navy hover:-translate-y-1 transition-all"
             >
               <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
             </button>
             <button
               type="button"
-              onClick={goToRegister}
+              onClick={goToCourseContent}
               className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-white border-2 border-navy/15 text-navy font-black rounded-2xl hover:border-purple hover:text-purple hover:-translate-y-1 transition-all"
             >
               <BadgeCheck className="w-5 h-5" /> Enrollment Form
@@ -543,7 +562,10 @@ const Eligibility = () => {
               </div>
 
               {fieldError && (
-                <div className="mt-4 flex items-start gap-3 bg-red-500/10 border-2 border-red-500/30 rounded-2xl px-5 py-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div
+                  key={errorKey}
+                  className="mt-4 flex items-start gap-3 bg-red-500/10 border-2 border-red-500/30 rounded-2xl px-5 py-4 animate-in fade-in slide-in-from-top-2 duration-300"
+                >
                   <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-red-300 font-bold text-sm leading-snug">
                     Please select your field first — you can't chat on WhatsApp or fill out the form until you do.
