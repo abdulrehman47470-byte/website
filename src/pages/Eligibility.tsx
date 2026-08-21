@@ -41,6 +41,7 @@ import {
   CheckCircle,
   Route,
   TrendingUp,
+  AlertCircle,
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { useScrollToTop } from '../hooks/useScrollToTop';
@@ -331,6 +332,27 @@ const Eligibility = () => {
   const [showRoadmap, setShowRoadmap] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
   const tabContentRef = useRef<HTMLDivElement>(null);
+  const fieldSelectorRef = useRef<HTMLDivElement>(null);
+
+  const [pendingAction, setPendingAction] = useState(false);
+  const [fieldError, setFieldError] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowStickyBar(window.scrollY > 480);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const goToRegister = () => {
+    if (!selectedField) {
+      setPendingAction(true);
+      setFieldError(true);
+      fieldSelectorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   type TabId = 'demo' | 'feedback' | 'mentor';
   const [activeTab, setActiveTab] = useState<TabId | null>(null);
@@ -354,10 +376,10 @@ const Eligibility = () => {
     const field = String(data.get('field') || '');
 
     const waSummary = `New Registration — BioCareer\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nField: ${field}\n\nI agree to pay the fee. Please send me the payment details.`;
-    window.open(waLink(waSummary), '_blank', 'noopener,noreferrer');
 
     setRegisterSubmitted(true);
     form.reset();
+    window.location.href = waLink(waSummary);
   };
 
   const fieldInfo = useMemo(
@@ -371,6 +393,7 @@ const Eligibility = () => {
       setActiveTab(null);
       return;
     }
+    setFieldError(false);
     setIsRevealing(true);
     setShowRoadmap(false);
     setActiveTab(null);
@@ -378,10 +401,16 @@ const Eligibility = () => {
       setIsRevealing(false);
       setShowRoadmap(true);
       window.setTimeout(() => {
-        roadmapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (pendingAction) {
+          document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setPendingAction(false);
+        } else {
+          roadmapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }, 100);
     }, 900);
     return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedField]);
 
   const waMessage = fieldInfo
@@ -414,6 +443,28 @@ const Eligibility = () => {
         </div>
       </header>
 
+      {/* Sticky Chat / Form bar — stays visible while scrolling through the page */}
+      {showStickyBar && (
+        <div className="fixed top-[65px] left-0 right-0 z-40 bg-navy/95 backdrop-blur-md border-b border-white/10 shadow-lg animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={goToRegister}
+              className="flex items-center gap-2 px-5 py-2.5 bg-purple text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
+            >
+              <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
+            </button>
+            <button
+              type="button"
+              onClick={goToRegister}
+              className="flex items-center gap-2 px-5 py-2.5 bg-white/10 border border-white/20 text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
+            >
+              <BadgeCheck className="w-4 h-4" /> Fill Out the Form
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-purple/5 to-white py-16 sm:py-24">
         <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -443,11 +494,27 @@ const Eligibility = () => {
             </p>
           </div>
 
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+            <button
+              type="button"
+              onClick={goToRegister}
+              className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-purple text-white font-black rounded-2xl shadow-xl shadow-purple/20 hover:bg-navy hover:-translate-y-1 transition-all"
+            >
+              <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
+            </button>
+            <button
+              type="button"
+              onClick={goToRegister}
+              className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-white border-2 border-navy/15 text-navy font-black rounded-2xl hover:border-purple hover:text-purple hover:-translate-y-1 transition-all"
+            >
+              <BadgeCheck className="w-5 h-5" /> Enrollment Form
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Field Selector */}
-      <section className="pb-16 sm:pb-24 scroll-mt-24">
+      <section ref={fieldSelectorRef} className="pb-16 sm:pb-24 scroll-mt-24">
         <div className="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-12 shadow-2xl relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple/20 blur-[80px] rounded-full pointer-events-none" />
@@ -474,6 +541,15 @@ const Eligibility = () => {
                 </select>
                 <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none" />
               </div>
+
+              {fieldError && (
+                <div className="mt-4 flex items-start gap-3 bg-red-500/10 border-2 border-red-500/30 rounded-2xl px-5 py-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-red-300 font-bold text-sm leading-snug">
+                    Please select your field first — you can't chat on WhatsApp or fill out the form until you do.
+                  </p>
+                </div>
+              )}
 
               {fieldInfo && (
                 <p className="mt-4 text-white/60 font-medium italic animate-in fade-in duration-500">
@@ -551,15 +627,6 @@ const Eligibility = () => {
                         </div>
                       );
                     })}
-                  </div>
-
-                  <div className="flex items-start gap-3 mt-10 bg-purple/5 border border-purple/15 rounded-2xl px-6 py-5 max-w-2xl mx-auto">
-                    <CheckCircle className="w-5 h-5 text-purple flex-shrink-0 mt-0.5" />
-                    <p className="text-navy/70 font-bold text-sm leading-relaxed text-left">
-                      All relevant skills, practical hands-on learning, and every other component of your{' '}
-                      {selectedField} track are included in this roadmap — taught from basics, so it's easy to
-                      understand whatever your starting point.
-                    </p>
                   </div>
                 </div>
               </div>
@@ -908,22 +975,14 @@ const Eligibility = () => {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                    <a
-                      href={waLink(waMessage)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={goToRegister}
                       className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-purple text-white font-black rounded-2xl shadow-2xl shadow-purple/30 hover:bg-white hover:text-navy hover:-translate-y-1 transition-all"
                     >
-                      <MessageCircle className="w-5 h-5" /> Interested? Message Me
-                    </a>
+                      <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
+                    </button>
                   </div>
-                  <p className="text-white/50 font-bold mt-5 text-sm">
-                    Only if you're interested — message{' '}
-                    <a href={`tel:+${WHATSAPP_NUMBER}`} className="text-purple font-black">
-                      {PHONE_DISPLAY}
-                    </a>{' '}
-                    and I'll personally send you the payment details.
-                  </p>
 
                   <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-[11px] font-black text-white/40 uppercase tracking-widest">
                     <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> Secure Enrollment</span>
@@ -958,10 +1017,10 @@ const Eligibility = () => {
                   {registerSubmitted ? (
                     <div className="relative z-10 text-center animate-in zoom-in duration-500">
                       <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
-                      <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">You're Almost In!</h3>
+                      <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">Redirecting to WhatsApp...</h3>
                       <p className="text-white/60 font-medium max-w-sm mx-auto">
-                        We've opened WhatsApp in a new tab with your details already filled in — just tap Send and
-                        we'll reply with your payment details right away.
+                        Taking you to WhatsApp now with your details already filled in — just tap Send and we'll
+                        reply with your payment details right away.
                       </p>
                       <button
                         type="button"
