@@ -35,6 +35,12 @@ import {
   FileBadge,
   BarChart3,
   Microscope,
+  Sparkles,
+  Phone,
+  UserRound,
+  CheckCircle,
+  Route,
+  TrendingUp,
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { useScrollToTop } from '../hooks/useScrollToTop';
@@ -324,6 +330,35 @@ const Eligibility = () => {
   const [isRevealing, setIsRevealing] = useState(false);
   const [showRoadmap, setShowRoadmap] = useState(false);
   const roadmapRef = useRef<HTMLDivElement>(null);
+  const tabContentRef = useRef<HTMLDivElement>(null);
+
+  type TabId = 'demo' | 'feedback' | 'mentor';
+  const [activeTab, setActiveTab] = useState<TabId | null>(null);
+
+  const openTab = (tab: TabId) => {
+    setActiveTab(tab);
+    window.setTimeout(() => {
+      tabContentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
+
+  const [registerSubmitted, setRegisterSubmitted] = useState(false);
+
+  const handleRegisterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get('name') || '');
+    const email = String(data.get('email') || '');
+    const phone = String(data.get('phone') || '');
+    const field = String(data.get('field') || '');
+
+    const waSummary = `New Registration — BioCareer\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nField: ${field}\n\nI agree to pay the fee. Please send me the payment details.`;
+    window.open(waLink(waSummary), '_blank', 'noopener,noreferrer');
+
+    setRegisterSubmitted(true);
+    form.reset();
+  };
 
   const fieldInfo = useMemo(
     () => allFields.find((f) => f.name === selectedField),
@@ -333,10 +368,12 @@ const Eligibility = () => {
   useEffect(() => {
     if (!selectedField) {
       setShowRoadmap(false);
+      setActiveTab(null);
       return;
     }
     setIsRevealing(true);
     setShowRoadmap(false);
+    setActiveTab(null);
     const timer = window.setTimeout(() => {
       setIsRevealing(false);
       setShowRoadmap(true);
@@ -397,11 +434,15 @@ const Eligibility = () => {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-navy tracking-tight leading-[1.05] mb-6">
             Learn <span className="text-purple">High-Demand & High-Earning</span> Skills of Your Field
           </h1>
-          <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            Select your field of study below — whether it's Biotechnology, Microbiology, Zoology, Pharmacy,
-            Biochemistry, Chemistry or any of the {allFields.length} bioscience & health fields — and instantly see
-            the exact high-income skills built for you.
-          </p>
+
+          {/* Prominent tagline callout */}
+          <div className="inline-flex items-center gap-3 bg-purple/10 border-2 border-purple/40 rounded-2xl px-6 sm:px-8 py-4 sm:py-5 mb-6 shadow-sm">
+            <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-purple flex-shrink-0" />
+            <p className="text-lg sm:text-2xl font-black text-navy leading-snug text-left">
+              Select your field and instantly get all the details tailored to your field.
+            </p>
+          </div>
+
         </div>
       </section>
 
@@ -459,114 +500,221 @@ const Eligibility = () => {
       {/* Personalized Roadmap */}
       {showRoadmap && (
         <div ref={roadmapRef} className="animate-in fade-in slide-in-from-bottom-6 duration-700">
-          <section className="pb-16 lg:pb-24 scroll-mt-24">
+          {/* Course Content — Personalized Roadmap (always shown once a field is picked) */}
+          <section className="pb-16 lg:pb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center max-w-3xl mx-auto mb-14">
-                <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">Step 2</span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-navy mb-4">
-                  Your Personalized Roadmap for <span className="text-purple">{selectedField}</span> Students
-                </h2>
-                <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  No matter which bio field you come from, these are the exact high-income skills that turn a{' '}
-                  {selectedField} degree into a research, pharma, or data science career.
-                </p>
-              </div>
+              <div className="relative bg-white rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-2xl border-2 border-purple/15 overflow-hidden">
+                <div className="absolute -top-24 -left-24 w-72 h-72 bg-purple/10 blur-[100px] rounded-full pointer-events-none" />
+                <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-purple/5 blur-[100px] rounded-full pointer-events-none" />
 
-              <div className="grid md:grid-cols-2 gap-8">
-                {skillCategories.map((cat, i) => {
-                  const title = selectedField ? cat.title.replace('PharmD', selectedField) : cat.title;
-                  return (
-                  <div
-                    key={cat.title}
-                    className="bg-slate-50 rounded-[2.5rem] p-8 sm:p-10 border border-slate-100 hover:border-purple/30 hover:-translate-y-1 transition-all"
-                  >
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className={`w-14 h-14 rounded-2xl ${cat.accent} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                        <cat.icon className="w-7 h-7 text-white" />
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-black text-navy leading-tight">
-                        {i + 1}. {title}
-                      </h3>
-                    </div>
-                    <ul className="grid sm:grid-cols-2 gap-3">
-                      {cat.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2.5">
-                          <CheckCircle2 className="w-5 h-5 text-purple flex-shrink-0 mt-0.5" />
-                          <span className="text-slate-700 font-medium leading-snug text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                <div className="relative z-10">
+                  <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-14">
+                    <span className="inline-flex items-center gap-2 text-purple font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20">
+                      <Route className="w-4 h-4" /> Step 2 — Personalized Roadmap
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-navy mb-4">
+                      Your Roadmap for <span className="text-purple">{selectedField}</span> Students
+                    </h2>
+                    <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
+                      Every relevant skill, hands-on practical, and career component for {selectedField} students is
+                      included in this roadmap — across 4 clear stages, from fundamentals to a paid career.
+                    </p>
                   </div>
-                  );
-                })}
-              </div>
 
-              <p className="text-center text-navy/60 font-bold italic mt-10 max-w-2xl mx-auto">
-                Note: All skills will be taught from basics — designed to be easy to understand, whatever your
-                starting point.
-              </p>
+                  <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+                    {skillCategories.map((cat, i) => {
+                      const title = selectedField ? cat.title.replace('PharmD', selectedField) : cat.title;
+                      return (
+                        <div
+                          key={cat.title}
+                          className="bg-slate-50 rounded-[2rem] p-6 sm:p-8 border border-slate-100 hover:border-purple/40 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all"
+                        >
+                          <div className="flex items-center gap-4 mb-6">
+                            <div className={`w-14 h-14 rounded-2xl ${cat.accent} flex items-center justify-center flex-shrink-0 shadow-lg relative`}>
+                              <cat.icon className="w-7 h-7 text-white" />
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-black text-purple uppercase tracking-widest">
+                                Stage {i + 1}
+                              </span>
+                              <h3 className="text-lg sm:text-xl font-black text-navy leading-tight">{title}</h3>
+                            </div>
+                          </div>
+                          <ul className="grid sm:grid-cols-2 gap-3">
+                            {cat.items.map((item) => (
+                              <li key={item} className="flex items-start gap-2.5">
+                                <CheckCircle2 className="w-5 h-5 text-purple flex-shrink-0 mt-0.5" />
+                                <span className="text-slate-700 font-medium leading-snug text-sm">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex items-start gap-3 mt-10 bg-purple/5 border border-purple/15 rounded-2xl px-6 py-5 max-w-2xl mx-auto">
+                    <CheckCircle className="w-5 h-5 text-purple flex-shrink-0 mt-0.5" />
+                    <p className="text-navy/70 font-bold text-sm leading-relaxed text-left">
+                      All relevant skills, practical hands-on learning, and every other component of your{' '}
+                      {selectedField} track are included in this roadmap — taught from basics, so it's easy to
+                      understand whatever your starting point.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
-          {/* Achievements After This Program */}
-          <section className="pb-16 lg:pb-24">
+          {/* Achievements After This Program — Learning Outcomes & Career Benefits (always shown) */}
+          <section className="pb-16 lg:pb-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center max-w-2xl mx-auto mb-14">
-                <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
-                  The Outcome
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">Achievements After This Program</h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {achievements.map((a) => (
-                  <div
-                    key={a.title}
-                    className="flex items-center gap-4 bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:border-purple/30 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all"
-                  >
-                    <div className="w-12 h-12 rounded-2xl bg-[#2563eb] flex items-center justify-center flex-shrink-0">
-                      <a.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="font-black text-navy leading-snug">{a.title}</h3>
+              <div className="relative bg-purple rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-2xl overflow-hidden">
+                <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 blur-[90px] rounded-full pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
+                    <span className="inline-flex items-center gap-2 text-white font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-white/15 border border-white/20">
+                      <TrendingUp className="w-4 h-4" /> Step 3 — Learning Outcomes & Career Benefits
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Achievements After This Program</h2>
                   </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {achievements.map((a) => (
+                      <div
+                        key={a.title}
+                        className="flex items-center gap-4 bg-white rounded-2xl p-6 border border-white/20 hover:shadow-xl hover:-translate-y-1 transition-all"
+                      >
+                        <div className="w-12 h-12 rounded-2xl bg-[#2563eb] flex items-center justify-center flex-shrink-0">
+                          <a.icon className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="font-black text-navy leading-snug">{a.title}</h3>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* About the Classes (always shown) */}
+          <section className="pb-16 lg:pb-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-slate-50 rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 lg:p-14 border border-slate-100">
+                <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
+                  <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
+                    How It Works
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">About the Classes</h2>
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {classDetails.map((d) => (
+                    <div
+                      key={d.title}
+                      className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
+                    >
+                      <div className="w-12 h-12 rounded-2xl bg-purple/10 flex items-center justify-center mb-5">
+                        <d.icon className="w-6 h-6 text-purple" />
+                      </div>
+                      <h3 className="font-black text-navy text-lg mb-2">{d.title}</h3>
+                      <p className="text-slate-500 font-medium leading-relaxed text-sm">{d.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Explore More — optional detail tabs, above Payment & Enrollment */}
+          <section className="pb-12 lg:pb-16 scroll-mt-24">
+            <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-2xl mx-auto mb-8">
+                <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
+                  Explore More
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-navy mb-3">Want More Before You Enroll?</h2>
+                <p className="text-slate-600 font-medium">
+                  Tap any option to open its full detail — then scroll down for payment & enrollment.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                {[
+                  { id: 'demo' as const, icon: Play, label: 'Demo Class', desc: 'Watch it live' },
+                  { id: 'feedback' as const, icon: MessageCircle, label: 'Feedback', desc: 'Student results' },
+                  { id: 'mentor' as const, icon: GraduationCap, label: 'About / Mentor', desc: 'Recognition & bio' },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => openTab(opt.id)}
+                    className={`flex flex-col items-center text-center gap-3 rounded-[1.75rem] p-6 border-2 transition-all ${
+                      activeTab === opt.id
+                        ? 'bg-navy border-navy shadow-2xl -translate-y-1'
+                        : 'bg-slate-50 border-slate-100 hover:border-purple/40 hover:-translate-y-1 hover:shadow-lg'
+                    }`}
+                  >
+                    <div
+                      className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${
+                        activeTab === opt.id ? 'bg-purple' : 'bg-purple/10'
+                      }`}
+                    >
+                      <opt.icon className={`w-7 h-7 ${activeTab === opt.id ? 'text-white' : 'text-purple'}`} />
+                    </div>
+                    <div>
+                      <p className={`font-black text-base ${activeTab === opt.id ? 'text-white' : 'text-navy'}`}>
+                        {opt.label}
+                      </p>
+                      <p className={`text-xs font-bold mt-0.5 ${activeTab === opt.id ? 'text-white/60' : 'text-slate-400'}`}>
+                        {opt.desc}
+                      </p>
+                    </div>
+                  </button>
                 ))}
               </div>
             </div>
           </section>
 
+          <div ref={tabContentRef} className="scroll-mt-24">
           {/* Watch the Demo */}
-          <section className="pb-16 lg:pb-24">
+          {activeTab === 'demo' && (
+          <section id="demo" className="pb-16 lg:pb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="relative bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-14 text-center shadow-2xl overflow-hidden">
+              <div className="relative bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-14 text-center shadow-2xl overflow-hidden ring-4 ring-purple/20">
                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple/20 blur-[80px] rounded-full pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple/10 blur-[80px] rounded-full pointer-events-none" />
                 <div className="relative z-10">
-                  <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
-                    See It In Action
+                  <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple text-white text-[11px] font-black uppercase tracking-widest rounded-full mb-6">
+                    Watch This Before You Decide
                   </span>
-                  <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Watch the Full Program Demo</h2>
-                  <p className="text-white/70 font-medium max-w-xl mx-auto mb-10">
-                    See exactly how the classes, research tools, and workflows work before you enroll.
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">Watch the Full Program Demo</h2>
+                  <p className="text-white/70 font-medium max-w-xl mx-auto mb-10 text-base sm:text-lg">
+                    See exactly how the classes, research tools, and workflows work — so you know precisely what
+                    you're getting before you enroll.
                   </p>
                   <a
                     href={DEMO_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-4 group"
+                    className="inline-flex items-center gap-4 group bg-white/5 border-2 border-white/10 hover:border-purple rounded-full pl-3 pr-8 py-3 transition-all"
                   >
-                    <div className="relative w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center group-hover:bg-purple transition-all duration-300">
+                    <div className="relative w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center group-hover:bg-purple transition-all duration-300 flex-shrink-0">
                       <Play className="w-6 h-6 text-purple ml-1 group-hover:text-white transition-colors duration-300" fill="currentColor" />
                       <span className="absolute inset-0 rounded-full bg-purple/30 animate-ping opacity-30" />
                     </div>
-                    <span className="font-black text-white text-lg group-hover:text-purple transition-colors duration-300">
-                      Watch Demo
+                    <span className="font-black text-white text-lg sm:text-xl group-hover:text-purple-300 transition-colors duration-300">
+                      Watch Full Demo Class
                     </span>
                   </a>
                 </div>
               </div>
             </div>
           </section>
+          )}
 
           {/* Social Proof — thousands of students on Facebook & LinkedIn */}
-          <section className="pb-16 lg:pb-24">
+          {activeTab === 'feedback' && (
+          <>
+          <section className="pb-16 lg:pb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-2xl mx-auto mb-10">
                 <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
@@ -615,8 +763,12 @@ const Eligibility = () => {
               <VideoFeedback />
             </div>
           </section>
+          </>
+          )}
 
-          {/* International Recognition */}
+          {/* International Recognition + Mentor — the "About / Mentor" tab */}
+          {activeTab === 'mentor' && (
+          <>
           <section className="py-16 lg:py-24">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative bg-navy rounded-[2.5rem] lg:rounded-[3rem] p-8 md:p-14 overflow-hidden shadow-2xl">
@@ -697,34 +849,44 @@ const Eligibility = () => {
             </div>
           </section>
 
-          {/* About the Classes */}
+          {/* Mentor / Social */}
           <section className="pb-16 lg:pb-24">
-            <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center max-w-2xl mx-auto mb-14">
-                <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
-                  How It Works
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">About the Classes</h2>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {classDetails.map((d) => (
-                  <div
-                    key={d.title}
-                    className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
+            <div className="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
+                Your Mentor
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">Connect with Abdur Rehman</h2>
+              <p className="text-lg text-slate-600 font-medium leading-relaxed mb-10 max-w-xl mx-auto">
+                Founder of BioCareer — researcher, patent holder, and mentor to hundreds of biology and pharmacy
+                students moving into research and data science careers.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+                {socialProfiles.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center gap-4 bg-slate-50 border border-slate-100 rounded-2xl px-6 py-5 hover:border-purple/30 hover:-translate-y-1 transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-purple/10 flex items-center justify-center mb-5">
-                      <d.icon className="w-6 h-6 text-purple" />
+                    <div className="w-12 h-12 rounded-xl bg-navy flex items-center justify-center flex-shrink-0 group-hover:bg-purple transition-colors">
+                      <s.icon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-black text-navy text-lg mb-2">{d.title}</h3>
-                    <p className="text-slate-500 font-medium leading-relaxed text-sm">{d.desc}</p>
-                  </div>
+                    <div className="text-left">
+                      <p className="font-black text-navy">{s.label}</p>
+                      <p className="text-xs text-slate-400 font-bold">{s.handle}</p>
+                    </div>
+                  </a>
                 ))}
               </div>
             </div>
           </section>
+          </>
+          )}
+          </div>
 
-          {/* Pricing / CTA */}
-          <section className="pb-16 lg:pb-24">
+          {/* Pricing / CTA — Payment and Fee (always shown) */}
+          <section className="pb-16 lg:pb-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-14 text-center shadow-2xl overflow-hidden">
                 <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-purple/20 blur-[90px] rounded-full pointer-events-none" />
@@ -773,35 +935,144 @@ const Eligibility = () => {
             </div>
           </section>
 
-          {/* Mentor / Social */}
-          <section className="pb-16 lg:pb-24">
-            <div className="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <span className="text-purple font-black text-sm uppercase tracking-widest mb-4 block">
-                Your Mentor
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">Connect with Abdur Rehman</h2>
-              <p className="text-lg text-slate-600 font-medium leading-relaxed mb-10 max-w-xl mx-auto">
-                Founder of BioCareer — researcher, patent holder, and mentor to hundreds of biology and pharmacy
-                students moving into research and data science careers.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                {socialProfiles.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center gap-4 bg-slate-50 border border-slate-100 rounded-2xl px-6 py-5 hover:border-purple/30 hover:-translate-y-1 transition-all group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-navy flex items-center justify-center flex-shrink-0 group-hover:bg-purple transition-colors">
-                      <s.icon className="w-6 h-6 text-white" />
+          {/* Registration Form */}
+          <section id="register" className="pb-16 lg:pb-24 scroll-mt-24">
+            <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-2xl mx-auto mb-12">
+                <span className="inline-flex items-center gap-2 text-purple font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-purple/10">
+                  <BadgeCheck className="w-4 h-4" /> Final Step — Register Now
+                </span>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-navy mb-4">
+                  Join the {selectedField} Program
+                </h2>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  Fill out the form below — it lands directly on WhatsApp so we can confirm your seat right away.
+                </p>
+              </div>
+
+              <div className="grid lg:grid-cols-5 gap-8 items-start">
+                {/* Form card */}
+                <div className="lg:col-span-3 bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-12 shadow-2xl relative overflow-hidden min-h-[520px] flex flex-col justify-center">
+                  <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple/20 blur-[80px] rounded-full pointer-events-none" />
+
+                  {registerSubmitted ? (
+                    <div className="relative z-10 text-center animate-in zoom-in duration-500">
+                      <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
+                      <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">You're Almost In!</h3>
+                      <p className="text-white/60 font-medium max-w-sm mx-auto">
+                        We've opened WhatsApp in a new tab with your details already filled in — just tap Send and
+                        we'll reply with your payment details right away.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setRegisterSubmitted(false)}
+                        className="mt-8 text-purple-300 font-black text-sm underline underline-offset-4 hover:text-white transition-colors"
+                      >
+                        Submit another registration
+                      </button>
                     </div>
-                    <div className="text-left">
-                      <p className="font-black text-navy">{s.label}</p>
-                      <p className="text-xs text-slate-400 font-bold">{s.handle}</p>
+                  ) : (
+                    <div className="relative z-10">
+                      <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">Registration Form</h3>
+                      <p className="text-white/50 font-medium text-sm mb-8">
+                        All fields are required. Submitting opens WhatsApp with your details, ready to send.
+                      </p>
+                      <form onSubmit={handleRegisterSubmit} className="space-y-4">
+                        <div className="relative">
+                          <UserRound className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" />
+                          <input
+                            name="name"
+                            type="text"
+                            placeholder="Full Name"
+                            required
+                            className="w-full bg-white/5 border-2 border-white/10 rounded-2xl pl-14 pr-6 py-4 text-white font-medium focus:outline-none focus:border-purple transition-all"
+                          />
+                        </div>
+                        <div className="relative">
+                          <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" />
+                          <input
+                            name="email"
+                            type="email"
+                            placeholder="Gmail / Email ID"
+                            required
+                            className="w-full bg-white/5 border-2 border-white/10 rounded-2xl pl-14 pr-6 py-4 text-white font-medium focus:outline-none focus:border-purple transition-all"
+                          />
+                        </div>
+                        <div className="relative">
+                          <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" />
+                          <input
+                            name="phone"
+                            type="tel"
+                            placeholder="Phone Number (WhatsApp)"
+                            required
+                            className="w-full bg-white/5 border-2 border-white/10 rounded-2xl pl-14 pr-6 py-4 text-white font-medium focus:outline-none focus:border-purple transition-all"
+                          />
+                        </div>
+                        <div className="relative">
+                          <select
+                            name="field"
+                            defaultValue={selectedField}
+                            required
+                            className="w-full appearance-none bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 text-white font-medium focus:outline-none focus:border-purple transition-all cursor-pointer"
+                          >
+                            <option value="" className="text-navy">
+                              Select your field / role...
+                            </option>
+                            {allFields.map((f) => (
+                              <option key={f.name} value={f.name} className="text-navy">
+                                {f.name}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50 pointer-events-none" />
+                        </div>
+
+                        <label className="flex items-start gap-3 bg-white/5 border-2 border-white/10 rounded-2xl px-5 py-4 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            required
+                            className="mt-0.5 w-5 h-5 rounded accent-purple flex-shrink-0 cursor-pointer"
+                          />
+                          <span className="text-white/80 font-medium text-sm leading-snug">
+                            I agree to pay the Rs 3,000 program fee to confirm my seat.
+                          </span>
+                        </label>
+
+                        <button
+                          type="submit"
+                          className="w-full py-5 bg-purple text-white font-black rounded-2xl hover:bg-white hover:text-navy transition-all flex items-center justify-center gap-3 shadow-xl shadow-purple/20"
+                        >
+                          <MessageCircle className="w-5 h-5" /> Submit Details & Chat on WhatsApp
+                        </button>
+                      </form>
                     </div>
-                  </a>
-                ))}
+                  )}
+                </div>
+
+                {/* Registration Journey */}
+                <div className="lg:col-span-2">
+                  <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8">
+                    <h4 className="font-black text-navy mb-3 flex items-center gap-2">
+                      <Lock className="w-4.5 h-4.5 text-purple" /> Your Registration Journey
+                    </h4>
+                    <ul className="space-y-3">
+                      {[
+                        'Fill the form & agree to pay the fee',
+                        'Submit — WhatsApp opens with your details, pre-filled',
+                        'Tap Send on WhatsApp',
+                        "We reply with payment details",
+                        "Pay & you're enrolled!",
+                      ].map((step, i) => (
+                        <li key={step} className="flex items-start gap-3">
+                          <span className="w-6 h-6 rounded-full bg-purple/15 text-purple text-xs font-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                            {i + 1}
+                          </span>
+                          <span className="text-slate-600 font-medium text-sm leading-snug">{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
