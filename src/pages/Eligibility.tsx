@@ -62,7 +62,7 @@ const allFields: FieldEntry[] = [
   // Most-requested fields first
   { name: 'Biotechnology', desc: 'Using tech and living matter together.' },
   { name: 'Bioinformatics', desc: 'Using computers to analyze genomic and biological data.' },
-  { name: 'Medical', desc: 'General medical & health sciences — MBBS, BDS, Pharmacy, Nursing, and more.' },
+  { name: 'Medical', desc: 'General medical & health sciences â MBBS, BDS, Pharmacy, Nursing, and more.' },
   { name: 'Microbiology', desc: 'Study of bacteria, viruses, and fungi.' },
   { name: 'Zoology', desc: 'Study of animals, their behavior, and physiology.' },
   { name: 'Botany', desc: 'Study of plants, growth, and processes.' },
@@ -87,9 +87,9 @@ const allFields: FieldEntry[] = [
   { name: 'Physiology', desc: 'How living organism systems function.' },
   { name: 'Marine Biology', desc: 'Life in oceans and saltwater environments.' },
   { name: 'Astrobiology', desc: 'Study of potential life in the universe.' },
-  { name: 'MBBS', desc: 'Bachelor of Medicine & Surgery — study and practice of human medicine.' },
-  { name: 'BDS', desc: 'Bachelor of Dental Surgery — study of oral and dental health.' },
-  { name: 'DVM', desc: 'Doctor of Veterinary Medicine — diagnosis and treatment of animal health.' },
+  { name: 'MBBS', desc: 'Bachelor of Medicine & Surgery â study and practice of human medicine.' },
+  { name: 'BDS', desc: 'Bachelor of Dental Surgery â study of oral and dental health.' },
+  { name: 'DVM', desc: 'Doctor of Veterinary Medicine â diagnosis and treatment of animal health.' },
   { name: 'Nursing', desc: 'Patient care, clinical practice, and health management.' },
   { name: 'Physiotherapy (DPT)', desc: 'Physical rehabilitation and human movement science.' },
   { name: 'Public Health', desc: 'Population health, epidemiology, and disease prevention.' },
@@ -168,7 +168,7 @@ const skillCategories = [
 ];
 
 const classDetails = [
-  { icon: Globe, title: 'Completely Online', desc: 'Learn from anywhere in the world — no campus, no commute.' },
+  { icon: Globe, title: 'Completely Online', desc: 'Learn from anywhere in the world â no campus, no commute.' },
   { icon: Calendar, title: '3 + 3 Month Structure', desc: '3 months of core learning, then 3 months of hands-on practical implementation.' },
   { icon: Video, title: 'Live + Recorded', desc: 'Join every session live or catch up anytime with full recordings.' },
   { icon: Clock, title: 'Weekend Evening Classes', desc: 'Sessions run on weekend evenings so they never clash with your studies or job.' },
@@ -180,7 +180,7 @@ const achievements = [
   { icon: Cpu, title: 'High Earning Computational Skills of Your Field' },
   { icon: BarChart3, title: 'High Demand Data Science Skills' },
   { icon: BrainCircuit, title: 'High Demand Earning AI / Automation Skills of Your Field' },
-  { icon: BookOpenCheck, title: 'Research Publication in Top International Journals — Free' },
+  { icon: BookOpenCheck, title: 'Research Publication in Top International Journals â Free' },
   { icon: Award, title: 'International Certificate' },
   { icon: Compass, title: 'Job Hunting' },
   { icon: Coins, title: 'Online Earning' },
@@ -248,7 +248,7 @@ const socialProfiles = [
   {
     icon: Facebook,
     label: 'Facebook',
-    handle: 'Abdur Rehman — BioCareer',
+    handle: 'Abdur Rehman â BioCareer',
     href: 'https://www.facebook.com/profile.php?id=61586018271684',
   },
 ];
@@ -327,6 +327,13 @@ const VideoFeedback = () => {
 const Eligibility = () => {
   useScrollToTop();
 
+  // Meta Pixel: ViewContent
+  useEffect(() => {
+    if (typeof (window as any).fbq !== 'undefined') {
+      (window as any).fbq('track', 'ViewContent', { content_name: 'Eligibility Page', content_category: 'BioCareer' });
+    }
+  }, []);
+
   const [selectedField, setSelectedField] = useState('');
   const [isRevealing, setIsRevealing] = useState(false);
   const [showRoadmap, setShowRoadmap] = useState(false);
@@ -354,13 +361,14 @@ const Eligibility = () => {
   // Used by the hero and sticky-bar buttons. First click with no field
   // picked: send them to the field selector (with the refreshing error).
   // Once a field is picked, the reveal effect below lands them on Course
-  // Content automatically — so a click on these buttons AFTER that point
+  // Content automatically â so a click on these buttons AFTER that point
   // means "I've seen it, take me to the form" and goes straight there.
   const goToNextStep = () => {
     if (!selectedField) {
       requireField();
       return;
     }
+    if (typeof (window as any).fbq !== 'undefined') { (window as any).fbq('track', 'Contact'); }
     document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -396,8 +404,11 @@ const Eligibility = () => {
     const phone = String(data.get('phone') || '');
     const field = String(data.get('field') || '');
 
-    const waSummary = `New Registration — BioCareer\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nField: ${field}\n\nI agree to pay the fee. Please send me the payment details.`;
+    const waSummary = `New Registration â BioCareer\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nField: ${field}\n\nI agree to pay the fee. Please send me the payment details.`;
 
+    if (typeof (window as any).fbq !== 'undefined') {
+      (window as any).fbq('track', 'Lead', { content_name: 'BioCareer Registration', value: 3000, currency: 'PKR' });
+    }
     setRegisterSubmitted(true);
     form.reset();
     window.location.href = waLink(waSummary);
@@ -441,8 +452,8 @@ const Eligibility = () => {
   return (
     <div className="min-h-screen bg-white font-sans">
       <SEO
-        title="Find Your Bio-Data Science Track — Skills Eligibility Check"
-        description="Select your bioscience or health field — Zoology, Bioinformatics, Genetics, Microbiology, BDS, MBBS, Pharm-D, and more — and get a personalized roadmap of high-income research, PharmD, data science, and AI automation skills taught by Abdul Rehman, founder of BioCareer."
+        title="Find Your Bio-Data Science Track â Skills Eligibility Check"
+        description="Select your bioscience or health field â Zoology, Bioinformatics, Genetics, Microbiology, BDS, MBBS, Pharm-D, and more â and get a personalized roadmap of high-income research, PharmD, data science, and AI automation skills taught by Abdul Rehman, founder of BioCareer."
         path="/eligibility"
         image="/images/hero-instructor.jpg"
       />
@@ -464,7 +475,7 @@ const Eligibility = () => {
         </div>
       </header>
 
-      {/* Sticky Chat / Form bar — stays visible while scrolling through the page */}
+      {/* Sticky Chat / Form bar â stays visible while scrolling through the page */}
       {showStickyBar && (
         <div className="fixed top-[65px] left-0 right-0 z-40 bg-navy/95 backdrop-blur-md border-b border-white/10 shadow-lg animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-center gap-3">
@@ -570,7 +581,7 @@ const Eligibility = () => {
                 >
                   <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-red-300 font-bold text-sm leading-snug">
-                    Please select your field first — you can't chat on WhatsApp or fill out the form until you do.
+                    Please select your field first â you can't chat on WhatsApp or fill out the form until you do.
                   </p>
                 </div>
               )}
@@ -600,7 +611,7 @@ const Eligibility = () => {
       {/* Personalized Roadmap */}
       {showRoadmap && (
         <div ref={roadmapRef} className="animate-in fade-in slide-in-from-bottom-6 duration-700">
-          {/* Course Content — Personalized Roadmap (always shown once a field is picked) */}
+          {/* Course Content â Personalized Roadmap (always shown once a field is picked) */}
           <section className="pb-16 lg:pb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative bg-white rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-2xl border-2 border-purple/15 overflow-hidden">
@@ -610,14 +621,14 @@ const Eligibility = () => {
                 <div className="relative z-10">
                   <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-14">
                     <span className="inline-flex items-center gap-2 text-purple font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-purple/10 border border-purple/20">
-                      <Route className="w-4 h-4" /> Step 2 — Personalized Roadmap
+                      <Route className="w-4 h-4" /> Step 2 â Personalized Roadmap
                     </span>
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-navy mb-4">
                       Your Roadmap for <span className="text-purple">{selectedField}</span> Students
                     </h2>
                     <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
                       Every relevant skill, hands-on practical, and career component for {selectedField} students is
-                      included in this roadmap — across 4 clear stages, from fundamentals to a paid career.
+                      included in this roadmap â across 4 clear stages, from fundamentals to a paid career.
                     </p>
                   </div>
 
@@ -657,7 +668,7 @@ const Eligibility = () => {
             </div>
           </section>
 
-          {/* Achievements After This Program — Learning Outcomes & Career Benefits (always shown) */}
+          {/* Achievements After This Program â Learning Outcomes & Career Benefits (always shown) */}
           <section className="pb-16 lg:pb-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative bg-purple rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-10 lg:p-14 shadow-2xl overflow-hidden">
@@ -665,7 +676,7 @@ const Eligibility = () => {
                 <div className="relative z-10">
                   <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
                     <span className="inline-flex items-center gap-2 text-white font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-white/15 border border-white/20">
-                      <TrendingUp className="w-4 h-4" /> Step 3 — Learning Outcomes & Career Benefits
+                      <TrendingUp className="w-4 h-4" /> Step 3 â Learning Outcomes & Career Benefits
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Achievements After This Program</h2>
                   </div>
@@ -715,7 +726,7 @@ const Eligibility = () => {
             </div>
           </section>
 
-          {/* Explore More — optional detail tabs, above Payment & Enrollment */}
+          {/* Explore More â optional detail tabs, above Payment & Enrollment */}
           <section className="pb-12 lg:pb-16 scroll-mt-24">
             <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-2xl mx-auto mb-8">
@@ -724,7 +735,7 @@ const Eligibility = () => {
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-black text-navy mb-3">Want More Before You Enroll?</h2>
                 <p className="text-slate-600 font-medium">
-                  Tap any option to open its full detail — then scroll down for payment & enrollment.
+                  Tap any option to open its full detail â then scroll down for payment & enrollment.
                 </p>
               </div>
 
@@ -779,7 +790,7 @@ const Eligibility = () => {
                   </span>
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">Watch the Full Program Demo</h2>
                   <p className="text-white/70 font-medium max-w-xl mx-auto mb-10 text-base sm:text-lg">
-                    See exactly how the classes, research tools, and workflows work — so you know precisely what
+                    See exactly how the classes, research tools, and workflows work â so you know precisely what
                     you're getting before you enroll.
                   </p>
                   <a
@@ -802,7 +813,7 @@ const Eligibility = () => {
           </section>
           )}
 
-          {/* Social Proof — thousands of students on Facebook & LinkedIn */}
+          {/* Social Proof â thousands of students on Facebook & LinkedIn */}
           {activeTab === 'feedback' && (
           <>
           <section className="pb-16 lg:pb-24 scroll-mt-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -815,7 +826,7 @@ const Eligibility = () => {
                   Trusted by <span className="text-purple">Thousands of Students</span>
                 </h2>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  A 100% success rate across every live session — verified publicly by students, in their own words.
+                  A 100% success rate across every live session â verified publicly by students, in their own words.
                 </p>
               </div>
 
@@ -848,7 +859,7 @@ const Eligibility = () => {
             </div>
           </section>
 
-          {/* Video Feedback — live class recordings */}
+          {/* Video Feedback â live class recordings */}
           <section className="pb-16 lg:pb-24">
             <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
               <VideoFeedback />
@@ -857,7 +868,7 @@ const Eligibility = () => {
           </>
           )}
 
-          {/* International Recognition + Mentor — the "About / Mentor" tab */}
+          {/* International Recognition + Mentor â the "About / Mentor" tab */}
           {activeTab === 'mentor' && (
           <>
           <section className="py-16 lg:py-24">
@@ -874,7 +885,7 @@ const Eligibility = () => {
                     <p className="text-white/70 text-base lg:text-lg leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
                       BioCareer is an <span className="font-bold text-white">Approved CPD Provider through The CPD
                       Group (UK)</span> and a recognized <span className="font-bold text-white">Partner
-                      Organization of the International Bioscience Affiliation Initiative (IBAI)</span> — reflecting
+                      Organization of the International Bioscience Affiliation Initiative (IBAI)</span> â reflecting
                       our commitment to quality training, academic excellence, and continuous professional
                       development.
                     </p>
@@ -903,7 +914,7 @@ const Eligibility = () => {
                         <source srcSet="/images/cpd-certificate.avif" type="image/avif" />
                         <img
                           src="/images/cpd-certificate.webp"
-                          alt="BioCareer — Approved CPD Provider Certificate"
+                          alt="BioCareer â Approved CPD Provider Certificate"
                           loading="lazy"
                           decoding="async"
                           width={700}
@@ -922,7 +933,7 @@ const Eligibility = () => {
                         <source srcSet="/images/ibai-certificate.avif" type="image/avif" />
                         <img
                           src="/images/ibai-certificate.webp"
-                          alt="BioCareer — IBAI Certificate of Recognition, Partner Organization"
+                          alt="BioCareer â IBAI Certificate of Recognition, Partner Organization"
                           loading="lazy"
                           decoding="async"
                           width={1280}
@@ -948,7 +959,7 @@ const Eligibility = () => {
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">Connect with Abdur Rehman</h2>
               <p className="text-lg text-slate-600 font-medium leading-relaxed mb-10 max-w-xl mx-auto">
-                Founder of BioCareer — researcher, patent holder, and mentor to hundreds of biology and pharmacy
+                Founder of BioCareer â researcher, patent holder, and mentor to hundreds of biology and pharmacy
                 students moving into research and data science careers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
@@ -976,7 +987,7 @@ const Eligibility = () => {
           )}
           </div>
 
-          {/* Pricing / CTA — Payment and Fee (always shown) */}
+          {/* Pricing / CTA â Payment and Fee (always shown) */}
           <section className="pb-16 lg:pb-24 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative bg-navy rounded-[2.5rem] sm:rounded-[3rem] p-8 sm:p-14 text-center shadow-2xl overflow-hidden">
@@ -1023,13 +1034,13 @@ const Eligibility = () => {
             <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-2xl mx-auto mb-12">
                 <span className="inline-flex items-center gap-2 text-purple font-black text-xs sm:text-sm uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-purple/10">
-                  <BadgeCheck className="w-4 h-4" /> Final Step — Register Now
+                  <BadgeCheck className="w-4 h-4" /> Final Step â Register Now
                 </span>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-navy mb-4">
                   Join the {selectedField} Program
                 </h2>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  Fill out the form below — it lands directly on WhatsApp so we can confirm your seat right away.
+                  Fill out the form below â it lands directly on WhatsApp so we can confirm your seat right away.
                 </p>
               </div>
 
@@ -1043,7 +1054,7 @@ const Eligibility = () => {
                       <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
                       <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">Redirecting to WhatsApp...</h3>
                       <p className="text-white/60 font-medium max-w-sm mx-auto">
-                        Taking you to WhatsApp now with your details already filled in — just tap Send and we'll
+                        Taking you to WhatsApp now with your details already filled in â just tap Send and we'll
                         reply with your payment details right away.
                       </p>
                       <button
@@ -1141,7 +1152,7 @@ const Eligibility = () => {
                     <ul className="space-y-3">
                       {[
                         'Fill the form & agree to pay the fee',
-                        'Submit — WhatsApp opens with your details, pre-filled',
+                        'Submit â WhatsApp opens with your details, pre-filled',
                         'Tap Send on WhatsApp',
                         "We reply with payment details",
                         "Pay & you're enrolled!",
