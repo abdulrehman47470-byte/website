@@ -351,15 +351,17 @@ const Eligibility = () => {
     fieldSelectorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Used by the hero and sticky-bar buttons: make sure a field is picked,
-  // then just let the user browse Course Content from the top — never
-  // jump straight to the registration form.
-  const goToCourseContent = () => {
+  // Used by the hero and sticky-bar buttons. First click with no field
+  // picked: send them to the field selector (with the refreshing error).
+  // Once a field is picked, the reveal effect below lands them on Course
+  // Content automatically — so a click on these buttons AFTER that point
+  // means "I've seen it, take me to the form" and goes straight there.
+  const goToNextStep = () => {
     if (!selectedField) {
       requireField();
       return;
     }
-    roadmapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   // Used only by the Total Fees "Chat on WhatsApp" button: after picking a
@@ -468,14 +470,14 @@ const Eligibility = () => {
           <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-center gap-3">
             <button
               type="button"
-              onClick={goToCourseContent}
+              onClick={goToNextStep}
               className="flex items-center gap-2 px-5 py-2.5 bg-purple text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
             >
               <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
             </button>
             <button
               type="button"
-              onClick={goToCourseContent}
+              onClick={goToNextStep}
               className="flex items-center gap-2 px-5 py-2.5 bg-white/10 border border-white/20 text-white font-black text-xs sm:text-sm rounded-xl hover:bg-white hover:text-navy transition-all"
             >
               <BadgeCheck className="w-4 h-4" /> Fill Out the Form
@@ -516,14 +518,14 @@ const Eligibility = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
             <button
               type="button"
-              onClick={goToCourseContent}
+              onClick={goToNextStep}
               className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-purple text-white font-black rounded-2xl shadow-xl shadow-purple/20 hover:bg-navy hover:-translate-y-1 transition-all"
             >
               <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
             </button>
             <button
               type="button"
-              onClick={goToCourseContent}
+              onClick={goToNextStep}
               className="flex-1 flex items-center justify-center gap-2.5 px-6 py-4 bg-white border-2 border-navy/15 text-navy font-black rounded-2xl hover:border-purple hover:text-purple hover:-translate-y-1 transition-all"
             >
               <BadgeCheck className="w-5 h-5" /> Enrollment Form
