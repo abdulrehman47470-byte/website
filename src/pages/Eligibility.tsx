@@ -407,7 +407,7 @@ const Eligibility = () => {
     const waSummary = `New Registration â BioCareer\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nField: ${field}\n\nI agree to pay the fee. Please send me the payment details.`;
 
     if (typeof (window as any).fbq !== 'undefined') {
-      (window as any).fbq('track', 'Lead', { content_name: 'BioCareer Registration', value: 3000, currency: 'PKR' });
+      (window as any).fbq('track', 'InitiateCheckout', { cohntent_name: 'BioCareer Registration', value: 3000, currency: 'PKR' , num_items: 1 });
     }
     setRegisterSubmitted(true);
     form.reset();
