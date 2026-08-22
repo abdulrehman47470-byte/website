@@ -9,7 +9,7 @@ import {
   Cpu,
   Briefcase,
   CheckCircle2,
-  Globe,h
+  Globe,
   Calendar,
   Video,
   Clock,
