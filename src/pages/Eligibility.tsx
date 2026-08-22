@@ -9,7 +9,7 @@ import {
   Cpu,
   Briefcase,
   CheckCircle2,
-  Globe,
+  Globe,h
   Calendar,
   Video,
   Clock,
@@ -411,7 +411,7 @@ const Eligibility = () => {
     }
     setRegisterSubmitted(true);
     form.reset();
-    window.location.href = waLink(waSummary);
+    window.open(waLink(waSummary), '_blank');
   };
 
   const fieldInfo = useMemo(
