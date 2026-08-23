@@ -33,7 +33,7 @@ const tocPages: FlipBookPage[] = Array.from({ length: 8 }, (_, i) => ({
   avif: `/images/book/toc-${i + 1}-v5.avif`,
   webp: `/images/book/toc-${i + 1}-v5.webp`,
   jpg: `/images/book/toc-${i + 1}-v5.jpg`,
-  alt: `Table of Contents — page ${i + 1} of 8`,
+  alt: `Table of Contents - page ${i + 1} of 8`,
 }));
 
 const highlights = [
@@ -63,7 +63,7 @@ const whyBook = [
   {
     icon: Wrench,
     title: 'Real Tools, Not Theory',
-    desc: 'Every chapter names the exact platform, template, or tool to open the same day — GitHub, LinkedIn, GeneSight, and more.',
+    desc: 'Every chapter names the exact platform, template, or tool to open the same day - GitHub, LinkedIn, GeneSight, and more.',
   },
   {
     icon: Rocket,
@@ -73,16 +73,16 @@ const whyBook = [
   {
     icon: Library,
     title: 'A Standing Reference',
-    desc: 'Twelve parts designed to be reopened for years — resources, cheat sheets, checklists, and worksheets, not a single read.',
+    desc: 'Twelve parts designed to be reopened for years - resources, cheat sheets, checklists, and worksheets, not a single read.',
   },
 ];
 
 const digitalFeatures = [
   'Instant access immediately after your order is confirmed',
-  'Read on any device — phone, tablet, or laptop',
-  'The complete 330-page book — all 12 Parts & 9 Appendices',
+  'Read on any device - phone, tablet, or laptop',
+  'The complete 330-page book - all 12 Parts & 9 Appendices',
   '250 AI startup ideas and 500 ready-to-use AI prompts included',
-  'Lifetime access — download once and keep forever',
+  'Lifetime access - download once and keep forever',
 ];
 
 const hardcoverFeatures = [
@@ -99,7 +99,7 @@ const Book = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title={`${BOOK_TITLE} — Book by Abdul Rehman`}
+        title={`${BOOK_TITLE} - Book by Abdul Rehman`}
         description="Master the high-income skills every bioscience degree holder needs. A 330-page, field-tested career roadmap from Abdul Rehman, Founder & CEO of GeneSight and BioCareer. Available as a Digital eBook or Hardcover Edition."
         path="/book"
         image="/images/book/cover.jpg"
@@ -140,7 +140,7 @@ const Book = () => {
                   <source srcSet="/images/book/cover.webp" type="image/webp" />
                   <img
                     src="/images/book/cover.jpg"
-                    alt={`${BOOK_TITLE} — book cover by Abdul Rehman`}
+                    alt={`${BOOK_TITLE} - book cover by Abdul Rehman`}
                     fetchPriority="high"
                     decoding="async"
                     className="w-full h-full object-cover"
@@ -158,7 +158,7 @@ const Book = () => {
                 Start Earning With Your <span className="text-purple">Bioscience Degree</span>
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed mb-6">
-                Master the high-income skills every bioscience degree holder needs — a complete,
+                Master the high-income skills every bioscience degree holder needs - a complete,
                 field-tested roadmap from a career that moved from a biotechnology programme in
                 Lahore to a remote Silicon Valley role, peer review for Wiley and Springer Nature,
                 and an internationally funded AI company.
@@ -228,7 +228,7 @@ const Book = () => {
               Explore the Full Table of Contents
             </h2>
             <p className="text-lg text-slate-600 font-medium leading-relaxed">
-              Flip through every part and chapter before you buy — the complete contents,
+              Flip through every part and chapter before you buy - the complete contents,
               nothing hidden. The rest of the book unlocks the moment your order is confirmed.
             </p>
           </div>
@@ -262,7 +262,7 @@ const Book = () => {
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-navy mb-4">Choose Your Format</h2>
             <p className="text-lg text-slate-600 font-medium leading-relaxed">
-              Two ways to start — the same complete book, delivered how you want to read it.
+              Two ways to start - the same complete book, delivered how you want to read it.
             </p>
           </div>
 

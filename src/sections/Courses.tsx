@@ -47,7 +47,7 @@ const Courses = () => {
             Master the High-Income & High Demand Bio Skills
           </h2>
           <p className={`text-lg text-text-body transition-all duration-600 ${isVisible ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '300ms' }}>
-            From basics to advanced applications—gain the Biotech and Research skills required to land 6-figure remote jobs.
+            From basics to advanced applications - gain the Biotech and Research skills required to land 6-figure remote jobs.
           </p>
         </div>
 

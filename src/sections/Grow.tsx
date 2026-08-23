@@ -20,14 +20,14 @@ const Grow = () => {
   }, []);
 
   const studentAchievements = [
-    { icon: <GraduationCap className="w-5 h-5" />, title: "Industry Skills", text: "Learn high-paying, industry-relevant skills universities don't teach—including bioinformatics and real research workflows." },
+    { icon: <GraduationCap className="w-5 h-5" />, title: "Industry Skills", text: "Learn high-paying, industry-relevant skills universities don't teach - including bioinformatics and real research workflows." },
     { icon: <Cpu className="w-5 h-5" />, title: "AI & ML Proficiency", text: "Master BioPython, N8N workflows, and AI-driven biotech tools, opening doors to high-paying career opportunities." },
     { icon: <BookOpen className="w-5 h-5" />, title: "Research Publication", text: "Learn to produce high-impact scientific publications, mastering the end-to-end process from data to international journals." },
     { icon: <Search className="w-5 h-5" />, title: "Global Job Hunting", text: "Master the art of tracking international remote roles, scholarship hunting, and supervisor outreach with proven strategies." },
     { icon: <DollarSign className="w-5 h-5" />, title: "Online Earning", text: "Learn to monetize your research expertise through freelancing and remote data roles, building a sustainable income stream." },
     { icon: <FileText className="w-5 h-5" />, title: "Scientific Writing", text: "Master research writing and data interpretation to significantly improve your employability in global academia." },
     { icon: <Layout className="w-5 h-5" />, title: "Expert Portfolio", text: "Build a strong professional CV and project showcase demonstrating expertise in AI and computational research." },
-    { icon: <PieChart className="w-5 h-5" />, title: "Data Dashboards", text: "Gain practical exposure to Power BI and Looker Studio—solving real-world problems that make you stand out globally." },
+    { icon: <PieChart className="w-5 h-5" />, title: "Data Dashboards", text: "Gain practical exposure to Power BI and Looker Studio - solving real-world problems that make you stand out globally." },
     { icon: <Microscope className="w-5 h-5" />, title: "Novel Discoveries", text: "Conduct original in-silico research work under my guidance to make independent discoveries in Biotech and Drug Design." }
   ];
 
